@@ -1,0 +1,25 @@
+package com.ft.spring.spring_02_IOC容器;
+
+import com.ft.spring.spring_02_IOC容器.bean.IOCBean;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+
+/**
+ * @Description
+ * @Author fangt
+ * @CreateTime 2022/9/30 9:28
+ */
+@Slf4j
+public class TestIOC_BeanFactory {
+
+    @Test
+    public void test(){
+        BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("applicationContext_02_IOC容器.xml"));
+        log.info("{}", beanFactory);
+        IOCBean bean = beanFactory.getBean(IOCBean.class);
+        log.info("{}", bean);
+    }
+}
