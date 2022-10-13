@@ -82,11 +82,4 @@ public class TestBean {
         log.info("6、注入泛型 List");
         beanList.forEach(x -> log.info("{}", x));
     }
-
-    /**
-     * 单例中注入多例
-     */
-    public void test1(){
-
-    }
 }
