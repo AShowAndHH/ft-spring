@@ -8,13 +8,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 1、配置包扫描 -->
-    <!-- 自动扫描 -->
-    <!--<context:annotation-config/>-->
-    <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
-    <context:component-scan base-package="com.ft.spring.spring_01_初识Spring_完整配置">
-        <!-- 排除部分 bean -->
-        <context:exclude-filter type="assignable" expression="com.ft.spring.spring_01_初识Spring_完整配置.exclude"/>
-    </context:component-scan>
+    <context:component-scan base-package="com.ft.spring.spring_07_事务管理"/>
 
 
     <!-- 2、引入外部属性文件 -->
@@ -23,7 +17,7 @@
 
 
     <!-- 3、配置 AOP - 启动 @aspectj 的自动代理支持-->
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy proxy-target-class="false"/>
 
 
     <!-- 4、数据源 -->
@@ -52,7 +46,7 @@
         <!-- 数据源 -->
         <property name="dataSource" ref="myDataSource"/>
         <!-- 别名处理 -->
-        <property name="typeAliasesPackage" value="com.ft.spring.spring_01_初识Spring_完整配置.dto"/>
+        <property name="typeAliasesPackage" value="com.ft.spring.spring_07_事务管理.dto"/>
         <!-- 加载配置文件，下面两种方法只能二选一 -->
         <!--<property name="configLocation" value="classpath:Spring/mybatis-config.xml"/>-->
         <property name="configuration" ref="configuration"/>
@@ -60,7 +54,7 @@
         <property name="globalConfig" ref="globalConfig"/>
         <!-- 加载Mapper资源 -->
         <property name="mapperLocations">
-            <array><value>classpath:mapper/01/*Mapper.xml</value></array>
+            <array><value>classpath:mapper/07/*Mapper.xml</value></array>
         </property>
     </bean>
 
@@ -84,6 +78,7 @@
 
     <!-- 配置dao包扫描 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.ft.spring.spring_01_初识Spring_完整配置.dao"/> <!-- 这里要配置包名，不是文件名 -->
+        <property name="basePackage" value="com.ft.spring.spring_07_事务管理.dao"/> <!-- 这里要配置包名，不是文件名 -->
     </bean>
+
 </beans>
