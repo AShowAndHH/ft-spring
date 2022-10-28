@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 // 加载配置文件，否则无法注入
 @ContextConfiguration(locations = {"classpath:applicationContext_01_初识Spring.xml"})
-public class TestSpring_Annotations {
+public class Spring_Annotations_Test {
     @Autowired
     private SpringBean bean;
 

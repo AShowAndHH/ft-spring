@@ -1,4 +1,4 @@
-package com.ft.spring.spring_02_IOC容器.bean;
+package com.ft.spring.spring_02_IOC容器;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;

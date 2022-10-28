@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext_01_初识Spring_完整配置.xml"})
-public class TestSpring_Complete {
+public class Spring_Complete_Test {
     @Autowired
     private SpringService service;
 

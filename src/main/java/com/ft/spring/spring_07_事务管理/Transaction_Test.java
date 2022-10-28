@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext_07_Transaction.xml"})
-public class TestTransaction {
+public class Transaction_Test {
     @Autowired
     private List<InsertService> insertServiceList;
 

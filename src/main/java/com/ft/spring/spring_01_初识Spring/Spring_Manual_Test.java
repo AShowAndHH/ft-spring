@@ -13,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @CreateTime 2022/9/28 12:17
  */
 @Slf4j
-public class TestSpring_Manual {
+public class Spring_Manual_Test {
     private ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext_01_初识Spring.xml");
 
     private SpringBean bean = applicationContext.getBean(SpringBean.class);

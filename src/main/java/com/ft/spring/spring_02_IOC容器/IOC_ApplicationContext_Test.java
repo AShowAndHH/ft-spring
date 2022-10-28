@@ -1,6 +1,5 @@
 package com.ft.spring.spring_02_IOC容器;
 
-import com.ft.spring.spring_02_IOC容器.bean.IOCBean;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -12,7 +11,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @CreateTime 2022/9/30 9:28
  */
 @Slf4j
-public class TestIOC_ApplicationContext {
+public class IOC_ApplicationContext_Test {
 
     @Test
     public void test(){
