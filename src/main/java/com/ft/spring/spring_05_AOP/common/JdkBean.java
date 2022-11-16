@@ -1,4 +1,4 @@
-package com.ft.spring.spring_05_AOP.service.jdkproxy;
+package com.ft.spring.spring_05_AOP.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class JdkProxyServiceImpl implements JdkProxyService {
+public class JdkBean implements JdkBeanInterface {
     @Override
     public void exe_a() {
         exe_b();
@@ -18,6 +18,6 @@ public class JdkProxyServiceImpl implements JdkProxyService {
 
     @Override
     public void exe_b() {
-        log.info("我是 Jdk Proxy");
+        log.info("我是 Jdk Bean");
     }
 }

@@ -132,6 +132,13 @@
       <artifactId>aspectjrt</artifactId>
       <version>1.9.6</version>
     </dependency>
+
+    <!-- CGLib 动态代理 -->
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib-nodep</artifactId>
+      <version>3.2.10</version>
+    </dependency>
   </dependencies>
 
   <build>

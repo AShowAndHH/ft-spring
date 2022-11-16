@@ -1,4 +1,4 @@
-package com.ft.spring.spring_05_AOP.service.cglibproxy;
+package com.ft.spring.spring_05_AOP.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class CglibProxyServiceImpl {
+public class CglibBean {
     public void exe_a() {
         exe_b();
     }
 
     public void exe_b() {
-        log.info("我是 Cglib Proxy");
+        log.info("我是 Cglib Bean");
     }
 }
