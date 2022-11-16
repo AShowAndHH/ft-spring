@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext_03_Bean.xml"})
-public class TestBean {
+public class Bean_Test {
     @Autowired
     private Bean01 beanAutowiredByType01;
     @Autowired

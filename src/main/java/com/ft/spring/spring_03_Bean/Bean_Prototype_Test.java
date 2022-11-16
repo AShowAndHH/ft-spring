@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext_03_Bean.xml"})
-public class TestBean_Prototype {
+public class Bean_Prototype_Test {
     @Autowired
     private SingletonBean singletonBean;
 
