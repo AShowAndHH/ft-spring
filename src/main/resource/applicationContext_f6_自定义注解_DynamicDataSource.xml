@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 1、配置包扫描 -->
+    <context:component-scan base-package="com.ft.spring.f6_自定义注解.dynamic_datasource"/>
+
+    <!-- 2、引入外部属性文件 -->
+    <context:property-placeholder location="classpath:config/db.properties"/>
+
+    <!-- 3、配置 AOP - 启动 @aspectj 的自动代理支持-->
+    <aop:aspectj-autoproxy/>
+
+    <!-- 4、数据源 -->
+    <!-- （1）单数据源 -->
+    <!--<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <!--<property name="driverClassName" value="${jdbc.mysql.driver}"/>-->
+        <!--<property name="url" value="${jdbc.mysql.url}"/>-->
+        <!--<property name="username" value="${jdbc.mysql.username}"/>-->
+        <!--<property name="password" value="${jdbc.mysql.password}"/>-->
+    <!--</bean>-->
+    <!-- （2）多数据源 -->
+    <bean id="mysql01" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.mysql.driver}"/>
+        <property name="url" value="${jdbc.mysql.url}"/>
+        <property name="username" value="${jdbc.mysql.username}"/>
+        <property name="password" value="${jdbc.mysql.password}"/>
+    </bean>
+    <bean id="mysql02" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.mysql2.driver}"/>
+        <property name="url" value="${jdbc.mysql2.url}"/>
+        <property name="username" value="${jdbc.mysql2.username}"/>
+        <property name="password" value="${jdbc.mysql2.password}"/>
+    </bean>
+    <!-- 配置动态数据源 -->
+    <bean id="myDataSource" class="com.ft.spring.f6_自定义注解.dynamic_datasource.config.MyDynamicDataSourceRouter">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry value-ref="mysql01" key="DATASOURCE-MYSQL-01"/>
+                <entry value-ref="mysql02" key="DATASOURCE-MYSQL-02"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="mysql01"/>
+    </bean>
+
+    <!-- 5、配置事务管理器 -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="myDataSource"/>
+    </bean>
+    <!-- 配置事务模板 -->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="dataSourceTransactionManager"/>
+    </bean>
+    <!-- 开启事务注解 -->
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+
+    <!-- 6、整合 MyBatis-Plus -->
+    <bean id="sqlSessionFactoryBean" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="myDataSource"/>
+        <!-- 别名处理 -->
+        <property name="typeAliasesPackage" value="com.ft.spring.f6_自定义注解.dynamic_datasource.dto"/>
+        <!-- 加载配置文件，下面两种方法只能二选一 -->
+        <!--<property name="configLocation" value="classpath:Spring/mybatis-config.xml"/>-->
+        <property name="configuration" ref="configuration"/>
+        <!-- 加载MP的全局策略配置 -->
+        <property name="globalConfig" ref="globalConfig"/>
+        <!-- 加载Mapper资源 -->
+        <property name="mapperLocations">
+            <array><value>classpath:mapper/f6/dynamic_datasource/*Mapper.xml</value></array>
+        </property>
+    </bean>
+
+    <!-- 这个等于Mybatis的全局配置文件，如果在MybatisSqlSessionFactoryBean里面已经配置了configLocation属性（外部加载Mybatis全局配置文件），就不能再配置configuration属性-->
+    <bean id="configuration" class="com.baomidou.mybatisplus.core.MybatisConfiguration">
+        <!-- 开启驼峰命名 -->
+        <property name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 日志打印SQL语句 -->
+        <property name="logImpl" value="org.apache.ibatis.logging.slf4j.Slf4jImpl"/>
+    </bean>
+
+    <!-- 配置MP的全局策略配置 -->
+    <bean id="globalConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig">
+        <property name="dbConfig" ref="dbConfig"/>
+    </bean>
+
+    <bean id="dbConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig.DbConfig">
+        <!--配置主键策略（这里选择的是主键自增）-->
+        <property name="idType" value="AUTO"/>
+    </bean>
+
+    <!-- 配置dao包扫描 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ft.spring.f6_自定义注解.dynamic_datasource.dao"/> <!-- 这里要配置包名，不是文件名 -->
+    </bean>
+</beans>
